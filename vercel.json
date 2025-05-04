@@ -1,0 +1,29 @@
+{
+    "version": 2,
+    "env": {
+      "DATABASE_URL": "@database_url",
+      "OTHER_SECRET": "@other_secret"
+    },
+    "builds": [
+      {
+        "src": "api/routes/**/*.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "api/routes/$1.js"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "index.js"
+      }
+    ]
+ }
+  
+  

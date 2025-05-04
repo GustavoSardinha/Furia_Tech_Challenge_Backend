@@ -4,6 +4,7 @@ import { WebSocketServer } from 'ws';
 const router = express.Router();
 
 // Constants
+const TEAMS = ["MongolZ", "VP", "COL", "Apogee", "M80", "NAVI", "Falcons", "MIBR", "Liquid", "MOUZ"];
 const ROUND_DURATION = 180;  
 const NO_EVENT_TIME = 20;    
 let furiaKills = 2;
@@ -12,7 +13,7 @@ let furiaKills = 2;
 let liveData = {
   furiaScore: 10,
   opponentScore: 8,
-  opponent: "NAVI",
+  opponent: "Liquid",
   time: 74,
   opponentLive: 3,
   c4: false,
@@ -147,8 +148,32 @@ function endRound(winner, reason) {
     // revive all players
     liveData.stats.forEach(p => p.alive = true);
     liveData.opponentLive = 5;
+    if (liveData.round > 30) {
+      resetMatch();
+      return;
+    }
 }
-
+function resetMatch() {
+  liveData.furiaScore = 0;
+  liveData.opponentScore = 0;
+  liveData.round = 1;
+  liveData.time = ROUND_DURATION;
+  liveData.ended = false;
+  liveData.c4 = false;
+  liveData.events = [];
+  liveData.highlights = ["A partida começou!"];
+  const teamIndex = Math.floor(Math.random() * TEAMS.length);
+  liveData.opponent = TEAMS[teamIndex];
+  liveData.stats.forEach(p => {
+    p.alive = true;
+    p.kills = 0;
+    p.deaths = 0;
+    p.assists = 0;
+  });
+  liveData.opponentLive = 5;
+  furiaKills = 0;
+  broadcast(liveData);
+}
 setInterval(updateLiveData, 1000);
 
 export { router as liveSimRouter, wss as liveWSS, liveData };
