@@ -72,11 +72,11 @@ api/
 
 ## Endpoints REST 🛣️🎯📝
 
-### `GET /api/chat`
+### `POST /api/chat`
 
 Roteia solicitações de chatbot para o `chatRouter`.
 
-* **Query**: `message` (string)
+* **Body**: `message` (string)
 * **Resposta**: JSON com `reply` (string)
 
 ### `GET /api/matches?page=FURIA`
