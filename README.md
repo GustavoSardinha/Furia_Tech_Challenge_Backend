@@ -1,4 +1,4 @@
-# Fur-IA Backend API
+# Fur-IA Live Status Backend API ⚡🎮🔥
 
 ## Descrição 📡⚙️🔗
 
